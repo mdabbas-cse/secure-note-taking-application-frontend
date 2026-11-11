@@ -70,7 +70,7 @@ Checks:
 npm run typecheck
 npm run lint
 npm run format:check
-VITE_API_BASE_URL=https://<your-backend-project>.vercel.app/api npm run build
+npm run build      # uses VITE_API_BASE_URL from .env.production
 ```
 
 ## Environment variables
@@ -82,7 +82,13 @@ VITE_API_BASE_URL=https://<your-backend-project>.vercel.app/api npm run build
 Everything prefixed `VITE_` is compiled into the public JavaScript bundle. **Never put
 secrets in frontend variables.** The JWT secret and database URI belong only to the backend.
 
-`VITE_API_BASE_URL` is read at **build time**. After changing it in Vercel, redeploy.
+The production value is committed in **`.env.production`**:
+`https://secure-note-taking-application-backend-abbas1-ded1.vercel.app/api`. It is a public
+URL, not a secret. A `VITE_API_BASE_URL` set in the Vercel project settings takes precedence
+over the file.
+
+`VITE_API_BASE_URL` is read at **build time**. After changing it in `.env.production` or in
+Vercel, rebuild and redeploy.
 
 ## Deploying on Vercel
 
@@ -96,8 +102,9 @@ this app's origin.
    - **Root Directory:** `./`
    - **Build Command:** `npm run build` (the default). It type-checks and then runs `vite build`.
    - **Output Directory:** `dist` (the default).
-4. **Environment Variables** (Production; also Preview if you use previews):
-   `VITE_API_BASE_URL = https://<your-backend-project>.vercel.app/api`
+4. **Environment Variables:** none are needed, because `.env.production` provides
+   `VITE_API_BASE_URL`. To point at a different backend, set `VITE_API_BASE_URL` here; it
+   overrides the file.
 5. Click **Deploy**.
 6. If the final frontend URL differs from the backend's `FRONTEND_URL`, update
    `FRONTEND_URL` in the **backend** project and redeploy the backend.

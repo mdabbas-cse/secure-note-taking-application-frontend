@@ -5,4 +5,6 @@ coverage
 .env
 .env.*
 !.env.example
+# Public production API URL (no secrets), committed so Vercel builds need no extra setup
+!.env.production
 *.log
